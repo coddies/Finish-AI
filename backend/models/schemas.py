@@ -23,6 +23,16 @@ class CreateProjectRequest(BaseModel):
     daily_hours: float = Field(default=2.0, ge=0.1, le=24.0)
 
 
+class CreateTaskRequest(BaseModel):
+    project_id: str
+    name: str = Field(..., min_length=1, max_length=300)
+    due_date: str = Field(..., description="ISO date string YYYY-MM-DD")
+    duration_minutes: int = Field(default=30, ge=1, le=1440)
+    priority: Literal["high", "medium", "low"] = "medium"
+    description: Optional[str] = ""
+    resource_url: Optional[str] = ""
+
+
 class TaskStatusUpdate(BaseModel):
     note: Optional[str] = None
 

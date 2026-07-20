@@ -5,14 +5,16 @@ POST /api/tasks/{id}/skip
 POST /api/tasks/{id}/delay
 GET  /api/tasks/today
 """
+import uuid
 from fastapi import APIRouter, HTTPException
 from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel
+from models.schemas import CreateTaskRequest
 
 from services.storage import (
     get_task, update_task_status, get_tasks_for_today,
-    get_project, save_project, get_tasks_by_project
+    get_project, save_project, get_tasks_by_project, save_task
 )
 from services.planner import calculate_project_stats
 
@@ -28,6 +30,49 @@ async def get_today_tasks():
     """Return all tasks due today across all projects."""
     tasks = await get_tasks_for_today()
     return {"tasks": tasks, "count": len(tasks)}
+
+
+@router.post("/create")
+async def create_task_endpoint(request: CreateTaskRequest):
+    """Manually create a new task for a project."""
+    project = await get_project(request.project_id)
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+
+    milestone_id = ""
+    if project.get("milestones") and len(project["milestones"]) > 0:
+        milestone_id = project["milestones"][0].get("id", "")
+
+    task_id = f"task_{uuid.uuid4().hex[:10]}"
+    task = {
+        "id": task_id,
+        "project_id": request.project_id,
+        "milestone_id": milestone_id,
+        "name": request.name,
+        "description": request.description or "",
+        "due_date": request.due_date,
+        "duration_minutes": request.duration_minutes,
+        "priority": request.priority,
+        "status": "pending",
+        "resource_url": request.resource_url or "",
+        "created_at": datetime.now().isoformat(),
+        "updated_at": None,
+        "completed_at": None,
+    }
+    await save_task(task)
+
+    # Attach to first milestone if present so roadmap visualizer includes it
+    if project.get("milestones") and len(project["milestones"]) > 0:
+        if "task_ids" not in project["milestones"][0]:
+            project["milestones"][0]["task_ids"] = []
+        project["milestones"][0]["task_ids"].append(task_id)
+
+    project_status = await _recalculate_project_status(request.project_id)
+    return {
+        "success": True,
+        "task": task,
+        "project_status": project_status,
+    }
 
 
 @router.post("/{task_id}/complete")

@@ -170,8 +170,10 @@ USE_GROQ → true for dev, false for prod
 
 - [2026-07-20] **STRICT ENGLISH DEFAULT LANGUAGE ACROSS AI COACH & GENERATION (`backend/routes/ai.py` & `dashboard.html`)** — Enforced strict **English as the default language** across all AI agent responses (`GREETING` and `LANGUAGE RULES` in `backend/routes/ai.py`) and project generation notifications (`generateProject` in `frontend/dashboard.html`). Simple one/two-word greetings (`"salam"`, `"hey"`, `"hello"`, `"start"`) and general questions now reply in clean, natural English by default (`"👋 Hey! I'm FinishAI. Tell me what you're trying to achieve..."`). The AI agent dynamically switches to Roman Urdu or Urdu only when the user explicitly writes full multi-word sentences in clear Roman Urdu or Urdu script.
 
+- [2026-07-20] **MANUAL TASK & PROJECT ENTRY WITH AI ANALYSIS INTEGRATION (`tasks.py`, `daily.html`, `projects.html`)** — Added complete manual entry options across the app jisse users kabhi bhi khud se tasks aur projects add kar sakte hain: (1) Fixed `+ New Project` button on `projects.html` header to open the manual project modal (`openManualModal()`), triggering full AI multi-phase roadmap generation (`submitManualProject`). (2) Created `POST /api/tasks/create` endpoint (`backend/routes/tasks.py` and `schemas.py`) and `createTask` wrapper (`frontend/js/api.js`) that attaches manual tasks to the project's milestones and triggers real-time statistical recalculation (`_recalculate_project_status`). (3) Added `+ Add Task` button in the `Action Items` header on `daily.html` (`openManualTaskModal()`) with project selection, duration, and priority dropdowns so manually added tasks appear immediately on Today's focus list and are analyzed by AI alongside AI-generated tasks.
+
 ## Known Issues
 
-- None at this time (All Bug fixes, UI improvements, Roadmap Platform, AI Chatbot Onboarding, Linear.app UI, Multi-Model Fallback, Intent-to-Tool Coach Rebuild, Robust Roadmap Parser, and English Default Language complete)
+- None at this time (All Bug fixes, UI improvements, Roadmap Platform, AI Chatbot Onboarding, Linear.app UI, Multi-Model Fallback, Intent-to-Tool Coach Rebuild, Robust Roadmap Parser, English Default Language, and Manual Task/Project Entry complete)
 
 

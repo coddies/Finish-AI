@@ -61,6 +61,14 @@ async function deleteProject(id) {
 
 // ─── TASKS ───────────────────────────────────────────────────────────────────
 
+/** Create a new manual task */
+async function createTask(data) {
+  return apiFetch('/api/tasks/create', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
 /** Mark a task as complete */
 async function completeTask(id, note = '') {
   return apiFetch(`/api/tasks/${id}/complete`, {
@@ -136,6 +144,7 @@ async function healthCheck() {
 // Using window globals since there's no module bundler
 window.API = {
   createProject,
+  createTask,
   getProjects,
   getProject,
   deleteProject,

@@ -320,6 +320,82 @@ function showLoadingState(container) {
   `;
 }
 
+// ─── MANUAL TASK MODAL ───────────────────────────────────────────────────────
+
+async function openManualTaskModal() {
+  const modal = document.getElementById('manual-task-modal');
+  if (!modal) return;
+  
+  // Set default due date to today YYYY-MM-DD
+  const dateInput = document.getElementById('mt-date');
+  if (dateInput) dateInput.value = window.App.todayStr();
+
+  // Populate project select dropdown
+  const projSelect = document.getElementById('mt-project');
+  if (projSelect) {
+    try {
+      const data = await window.API.getProjects();
+      const projects = data.projects || [];
+      if (projects.length === 0) {
+        projSelect.innerHTML = '<option value="">No projects found — create one first</option>';
+      } else {
+        projSelect.innerHTML = projects.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+      }
+    } catch (e) {
+      projSelect.innerHTML = '<option value="">Failed to load projects</option>';
+    }
+  }
+
+  modal.style.display = 'block';
+}
+
+function closeManualTaskModal() {
+  const modal = document.getElementById('manual-task-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function submitManualTask() {
+  const title = document.getElementById('mt-title')?.value.trim();
+  const projectId = document.getElementById('mt-project')?.value;
+  const dueDate = document.getElementById('mt-date')?.value;
+  const duration = parseInt(document.getElementById('mt-mins')?.value || '30', 10);
+  const priority = document.getElementById('mt-priority')?.value || 'medium';
+
+  if (!title || !projectId || !dueDate) {
+    window.App.showToast('Error', 'Please fill in Task Title, Project, and Due Date.', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('mt-submit');
+  const origText = btn ? btn.innerHTML : 'Save Action Item →';
+  if (btn) {
+    btn.innerHTML = '⏳ Saving...';
+    btn.disabled = true;
+  }
+
+  try {
+    await window.API.createTask({
+      project_id: projectId,
+      name: title,
+      due_date: dueDate,
+      duration_minutes: duration,
+      priority: priority,
+      description: 'Manually added action item'
+    });
+    window.App.showToast('Success', 'Action item added successfully!', 'success');
+    closeManualTaskModal();
+    if (document.getElementById('mt-title')) document.getElementById('mt-title').value = '';
+    await loadTodayTasks();
+  } catch (err) {
+    window.App.showToast('Save Failed', err.message, 'error');
+  } finally {
+    if (btn) {
+      btn.innerHTML = origText;
+      btn.disabled = false;
+    }
+  }
+}
+
 // ─── INIT ────────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', initDailyPage);
@@ -328,3 +404,6 @@ window.completeDailyTask = completeDailyTask;
 window.skipDailyTask = skipDailyTask;
 window.delayDailyTask = delayDailyTask;
 window.loadTodayTasks = loadTodayTasks;
+window.openManualTaskModal = openManualTaskModal;
+window.closeManualTaskModal = closeManualTaskModal;
+window.submitManualTask = submitManualTask;

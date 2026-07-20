@@ -63,7 +63,7 @@
     
     <div class="topbar-right">
       <a href="projects.html" class="btn btn-ghost btn-sm">Projects</a>
-      <a href="dashboard.html" class="btn btn-primary btn-sm">+ New Project</a>
+      <a href="projects.html" class="btn btn-primary btn-sm">+ New Project</a>
     </div>
   </header>
 
@@ -161,7 +161,10 @@
         <div style="display: flex; flex-direction: column; gap: 16px; min-width: 0;">
           <div class="flex items-center justify-between mb-4 flex-wrap gap-8" style="border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
             <h2 style="font-size: 18px; font-weight: 800; color: var(--text-primary); margin: 0;">Action Items</h2>
-            <span class="text-muted" style="font-size: 12px; font-weight: 500;">Complete / Skip / Delay</span>
+            <div class="flex items-center gap-12">
+              <span class="text-muted" style="font-size: 12px; font-weight: 500;">Complete / Skip / Delay</span>
+              <button class="btn btn-primary btn-sm" onclick="openManualTaskModal()">+ Add Task</button>
+            </div>
           </div>
 
           <!-- TASKS LIST -->
@@ -178,6 +181,50 @@
 
     </div>
   </div>
+
+  <!-- MANUAL TASK MODAL -->
+  <div id="manual-task-modal" style="display: none;">
+    <div class="modal-overlay" onclick="if(event.target===this)closeManualTaskModal()">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Add Manual Action Item</h3>
+          <button class="modal-close" onclick="closeManualTaskModal()">✕</button>
+        </div>
+        <div class="flex flex-col gap-12">
+          <div class="form-group">
+            <label class="form-label">Task Title</label>
+            <input type="text" class="form-input" id="mt-title" placeholder="e.g. Complete math exercises" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Select Project</label>
+            <select class="form-select" id="mt-project"></select>
+          </div>
+          <div class="grid-2 gap-12">
+            <div class="form-group">
+              <label class="form-label">Due Date</label>
+              <input type="date" class="form-input" id="mt-date" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Duration (Minutes)</label>
+              <input type="number" class="form-input" id="mt-mins" value="45" min="5" max="480" step="5" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Priority</label>
+            <select class="form-select" id="mt-priority">
+              <option value="high">High Priority</option>
+              <option value="medium" selected>Medium Priority</option>
+              <option value="low">Low Priority</option>
+            </select>
+          </div>
+          <button class="btn btn-primary mt-12" id="mt-submit" onclick="submitManualTask()" style="width: 100%;">
+            Save Action Item →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /MANUAL TASK MODAL -->
 
   <!-- Celebration Overlay -->
   <div id="celebration-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 9990; align-items: center; justify-content: center;"></div>
