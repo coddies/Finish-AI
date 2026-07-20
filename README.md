@@ -52,9 +52,7 @@ cd frontend && python -m http.server 3000
 
 ### API Keys
 - **OpenAI**: [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
-- **Groq** (free, for dev): [console.groq.com](https://console.groq.com)
 
-Set `USE_GROQ=true` in `.env` to use the free Groq API during development.
 
 ---
 
