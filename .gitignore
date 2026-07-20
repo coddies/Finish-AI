@@ -1,0 +1,23 @@
+# FinishAI
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.env
+*.env
+venv/
+env/
+.venv/
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+data/*.json
+backend/data/*.json
+**/data/*.json
+*.sqlite
+*.db
+.pytest_cache/
+dist/
+build/
+*.egg-info/

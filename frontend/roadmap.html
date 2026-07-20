@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Roadmap & Resources — FinishAI</title>
+  <meta name="description" content="FinishAI Visual Roadmap — phase timeline, practice projects, checkpoints, and complete resource library." />
+  <link rel="icon" type="image/png" href="img/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=20260718_1" />
+  <link rel="stylesheet" href="css/components.css?v=20260718_1" />
+  <link rel="stylesheet" href="css/animations.css?v=20260718_1" />
+  <style>
+    /* Custom Roadmap Timeline Styles */
+    .roadmap-timeline-node {
+      position: relative;
+      padding: 18px 20px;
+      margin-left: 28px;
+      margin-bottom: 24px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .roadmap-timeline-node:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateX(4px);
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+    .roadmap-timeline-node.active-node {
+      background: rgba(59, 130, 246, 0.12);
+      border-color: #3B82F6;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+    }
+    .roadmap-timeline-dot {
+      position: absolute;
+      left: -38px;
+      top: 22px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #334155;
+      border: 3px solid var(--bg-main, #0A0F1E);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #fff;
+      z-index: 2;
+    }
+    .roadmap-timeline-dot.current {
+      background: #3B82F6;
+      box-shadow: 0 0 12px #3B82F6;
+    }
+    .roadmap-timeline-dot.completed {
+      background: #10B981;
+      box-shadow: 0 0 12px #10B981;
+    }
+    .roadmap-timeline-line {
+      position: absolute;
+      left: 10px;
+      top: 36px;
+      bottom: 0;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.12);
+      z-index: 1;
+    }
+    .resource-group-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin: 18px 0 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .resource-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      transition: all 0.2s ease;
+    }
+    .resource-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+    .filter-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <!-- FIXED TOP BAR -->
+  <header class="topbar-fixed">
+    <a href="dashboard.html" class="topbar-brand">
+      <span>⚡ FinishAI</span>
+    </a>
+    
+    <div class="topbar-right">
+      <a href="daily.html" class="btn btn-ghost btn-sm">Focus Mode</a>
+      <a href="projects.html" class="btn btn-ghost btn-sm">Projects</a>
+      <a href="#" id="btn-project-overview" class="btn btn-secondary btn-sm">Overview & Tasks</a>
+    </div>
+  </header>
+
+  <!-- FIXED BOTTOM DOCK -->
+  <nav class="dock">
+    <a href="dashboard.html" class="dock-item" data-label="Dashboard">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+    </a>
+    <a href="daily.html" class="dock-item" data-label="Today">
+      <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    </a>
+    <a href="projects.html" class="dock-item" data-label="Projects">
+      <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+    </a>
+    <a href="roadmap.html" class="dock-item active" data-label="Roadmap">
+      <svg viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+    </a>
+    <a href="#" class="dock-item" data-label="Settings" onclick="window.App.showToast('Coming soon!','Settings panel coming next.','info'); return false;">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06-.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </a>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <div class="page-content" id="roadmap-content">
+
+      <!-- HEADER CARD -->
+      <div class="card mb-24">
+        <div class="flex justify-between items-start flex-wrap gap-16 mb-16">
+          <div>
+            <div class="flex items-center gap-12 mb-4 flex-wrap">
+              <a href="#" id="back-to-project" class="btn btn-ghost btn-sm">← Back</a>
+              <h1 id="roadmap-top-title" style="font-size: 20px; font-weight: 700;">Loading Roadmap...</h1>
+              <span id="project-type-badge"></span>
+              <span id="project-status-badge"></span>
+            </div>
+            <div class="text-secondary" style="font-size: 13px;" id="project-deadline"></div>
+          </div>
+
+          <div class="flex gap-16">
+            <div class="stat-card" style="min-width: 120px; padding: 12px;">
+              <div class="stat-number" id="stat-resources-count" style="color: var(--primary);">0</div>
+              <div class="stat-label">Total Resources</div>
+            </div>
+            <div class="stat-card" style="min-width: 120px; padding: 12px;">
+              <div class="stat-number" id="stat-phases-count" style="color: var(--purple);">0</div>
+              <div class="stat-label">Total Phases</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tools-needed-container" style="display: none; padding-top: 16px; border-top: 1px solid var(--border-subtle);">
+          <div class="section-label mb-8">RECOMMENDED STACK & TOOLS</div>
+          <div id="tools-needed-list" class="flex flex-wrap gap-8"></div>
+        </div>
+      </div>
+
+      <!-- VISUAL ROADMAP GRID -->
+      <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 24px; align-items: start; margin-bottom: 32px;">
+        <!-- Left: Vertical Timeline -->
+        <div>
+          <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            Phase Timeline <span class="text-muted" style="font-size: 12px; font-weight: 400;">(Click phase to view resources)</span>
+          </h3>
+          <div id="timeline-nodes-container" style="position: relative; padding-left: 10px;">
+            <div class="card mb-16" style="height: 80px;"></div>
+            <div class="card mb-16" style="height: 80px;"></div>
+            <div class="card" style="height: 80px;"></div>
+          </div>
+        </div>
+
+        <!-- Right: Resources Panel -->
+        <div>
+          <div class="flex justify-between items-center mb-16">
+            <h3 style="font-size: 16px; font-weight: 600;">Phase Resources Panel</h3>
+            <span id="selected-phase-badge" class="badge badge-primary">Select a phase</span>
+          </div>
+          <div id="phase-resources-panel" class="card" style="min-height: 380px;">
+            <div class="card" style="height: 320px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OVERALL RESOURCES SUMMARY -->
+      <div class="card mb-32">
+        <div class="flex justify-between items-center flex-wrap gap-16 mb-20">
+          <div>
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 4px;">Complete Resource Library</h3>
+            <p class="text-secondary" style="font-size: 13px; margin: 0;">All curated resources across your entire project in one searchable hub.</p>
+          </div>
+          <div class="filter-tabs" id="resource-filters">
+            <button class="filter-tab active" onclick="filterResources('all')">All Resources</button>
+            <button class="filter-tab" onclick="filterResources('youtube')">Videos</button>
+            <button class="filter-tab" onclick="filterResources('website')">Websites</button>
+            <button class="filter-tab" onclick="filterResources('tool')">Tools</button>
+            <button class="filter-tab" onclick="filterResources('article')">Articles</button>
+          </div>
+        </div>
+
+        <div id="all-resources-grid" class="grid-3">
+          <div class="card" style="height: 100px;"></div>
+          <div class="card" style="height: 100px;"></div>
+          <div class="card" style="height: 100px;"></div>
+        </div>
+      </div>
+
+      <!-- Hidden fields needed by JS -->
+      <span id="roadmap-project-title" style="display: none;"></span>
+      <span id="roadmap-project-desc" style="display: none;"></span>
+
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/roadmap.js"></script>
+</body>
+</html>

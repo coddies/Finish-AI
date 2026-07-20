@@ -1,0 +1,804 @@
+/* FinishAI — Components CSS (Linear.app Aesthetic) */
+/* Cards, modals, task items, alerts, checkboxes, tabs, timeline, resources */
+
+/* ─── STAT CARDS ────────────────────────────────────────────────────────────── */
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  border-color: #2D3748;
+}
+
+.stat-card-compact {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.stat-icon-box {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.stat-number, .stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.stat-card-compact .stat-number, .stat-card-compact .stat-value {
+  font-size: 18px;
+}
+
+.stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-card-compact .stat-label {
+  font-size: 10px;
+}
+
+/* ─── PROJECT CARDS (GRID) ──────────────────────────────────────────────────── */
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card:hover {
+  background: var(--bg-hover);
+  border-color: #2D3748;
+}
+
+.project-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.project-card-emoji {
+  font-size: 1.6rem;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elevated);
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.project-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.project-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.project-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ─── TABS ──────────────────────────────────────────────────────────────────── */
+.tab-nav, .tabs-header {
+  display: flex;
+  gap: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-top: 14px;
+  margin-bottom: 16px;
+}
+
+.tab-btn, .tab-item {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  transition: var(--transition);
+}
+
+.tab-btn:hover, .tab-item:hover {
+  color: var(--text-secondary);
+}
+
+.tab-btn.active, .tab-item.active {
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--primary);
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+/* ─── MILESTONE CARDS (LINEAR STYLE) ────────────────────────────────────────── */
+.milestone-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  margin-bottom: 16px;
+  padding: 20px 24px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.btn-open-resource {
+  font-weight: 600;
+  color: #3B82F6 !important;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.btn-open-resource:hover {
+  text-decoration: underline !important;
+  color: #60A5FA !important;
+}
+
+.milestone-header {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.milestone-header:hover {
+  background: var(--bg-hover);
+}
+
+.milestone-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.milestone-number {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg-hover);
+  border: 1px solid #2D3748;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.milestone-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.milestone-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+}
+
+.milestone-date {
+  color: var(--text-muted);
+}
+
+.milestone-progress-text {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.milestone-arrow {
+  font-size: 14px;
+  color: var(--text-muted);
+  transition: transform 150ms ease;
+}
+
+.milestone-progress-bar {
+  height: 2px;
+  background: var(--border-default);
+  margin: 0 16px;
+  overflow: hidden;
+}
+
+.milestone-progress-fill {
+  height: 100%;
+  background: var(--primary);
+  transition: width 150ms ease;
+}
+
+.milestone-tasks, .milestone-expanded {
+  padding: 14px 16px;
+  border-top: 1px solid var(--border-subtle);
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.milestone-tasks.open, .milestone-expanded.open {
+  display: flex;
+}
+
+/* ─── RESOURCES AS ROWS ─────────────────────────────────────────────────────── */
+.resource-row {
+  padding: 8px 0;
+  border-bottom: 1px solid #0A0F1E;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.resource-row:last-child {
+  border-bottom: none;
+}
+
+.resource-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1;
+}
+
+.resource-type-icon {
+  font-size: 14px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.resource-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #E2E8F0;
+}
+
+.resource-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.resource-link-btn {
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.resource-link-btn:hover {
+  text-decoration: underline;
+}
+
+/* ─── CHECKPOINTS, TIPS, WARNINGS ───────────────────────────────────────────── */
+.checkpoint-box {
+  margin-top: 10px;
+  border-left: 2px solid var(--success);
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tip-row {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 4px 0;
+}
+
+.warning-row {
+  font-size: 13px;
+  color: var(--warning);
+  padding: 4px 0;
+}
+
+/* ─── TASKS AS ROWS (LINEAR STYLE) ─────────────────────────────────────────── */
+.task-item, .task-row {
+  padding: 10px 0;
+  border-bottom: 1px solid #0A0F1E;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  transition: var(--transition);
+}
+
+.task-item:last-child, .task-row:last-child {
+  border-bottom: none;
+}
+
+.task-checkbox {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #2D3748;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.task-checkbox:hover {
+  border-color: var(--primary);
+}
+
+.task-checkbox.checked {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.task-checkbox.checked::after {
+  content: '✓';
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.task-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: #E2E8F0;
+}
+
+.task-item.completed .task-name, .task-row.completed .task-name {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.priority-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.priority-dot.high { background: var(--danger); }
+.priority-dot.medium { background: var(--warning); }
+.priority-dot.low { background: var(--text-muted); }
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.task-action-btn {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.task-action-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: #2D3748;
+}
+
+.task-action-btn.done { color: var(--success); }
+.task-action-btn.delay { color: var(--warning); }
+
+/* ─── PROGRESS CIRCLE (44px compact header version) ────────────────────────── */
+.progress-circle {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.progress-circle svg {
+  transform: rotate(-90deg);
+  width: 44px;
+  height: 44px;
+}
+
+.progress-circle-bg {
+  fill: none;
+  stroke: var(--border-default);
+  stroke-width: 3;
+}
+
+.progress-circle-fill {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 300ms ease;
+}
+
+.progress-circle-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ─── CHAT CARD (DASHBOARD) ─────────────────────────────────────────────────── */
+.chat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.chat-header {
+  height: 48px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.dot-green {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+}
+
+.chat-header-right-pill {
+  background: var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 12px;
+  border-radius: 20px;
+  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chat-messages {
+  padding: 16px;
+  min-height: 140px;
+  max-height: 420px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-bubble {
+  display: flex;
+  gap: 10px;
+  max-width: 85%;
+}
+
+.chat-bubble.bot {
+  align-self: flex-start;
+}
+
+.chat-bubble.user {
+  margin-left: auto;
+  flex-direction: row-reverse;
+}
+
+.bubble-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-hover);
+  border: 1px solid var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.bubble-text {
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  border-radius: 12px;
+}
+
+.chat-bubble.bot .bubble-text {
+  background: var(--border-subtle);
+  border: 1px solid var(--border-default);
+  border-radius: 2px 12px 12px 12px;
+  color: #E2E8F0;
+}
+
+.chat-bubble.user .bubble-text {
+  background: #1E3A5F;
+  border: 1px solid #2563EB;
+  border-radius: 12px 2px 12px 12px;
+  color: var(--text-primary);
+}
+
+.chat-input-bar {
+  height: 52px;
+  border-top: 1px solid var(--border-subtle);
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+}
+
+.chat-input::placeholder {
+  color: #475569;
+}
+
+.chat-send-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.chat-send-btn:hover {
+  background: #2563EB;
+}
+
+/* Chips Container inside chat */
+.chat-chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 6px 16px 14px 16px;
+}
+
+.chip, .chat-chip {
+  padding: 8px 16px !important;
+  background: rgba(59, 130, 246, 0.18) !important;
+  border: 1px solid rgba(59, 130, 246, 0.45) !important;
+  border-radius: 99px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #F8FAFC !important;
+  cursor: pointer !important;
+  transition: all 150ms ease !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.chip:hover, .chat-chip:hover {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+}
+
+/* ─── TIMELINE (ROADMAP & PROJECT) ──────────────────────────────────────────── */
+.timeline {
+  position: relative;
+  padding-left: 24px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-default);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -20px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--border-default);
+  background: var(--bg-page);
+  transition: var(--transition);
+}
+
+.timeline-dot.completed {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.timeline-dot.active {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+/* ─── COACH MESSAGE & NEXT ACTION ───────────────────────────────────────────── */
+.coach-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.coach-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-hover);
+  border: 1px solid var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.next-action-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-active);
+  border-radius: 10px;
+  padding: 16px 20px;
+  color: var(--text-primary);
+}
+
+/* ─── EMPTY STATE ───────────────────────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.empty-state-icon {
+  font-size: 3rem;
+  opacity: 0.6;
+}
+
+.empty-state-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.empty-state-subtitle {
+  color: var(--text-muted);
+  font-size: 13px;
+  max-width: 320px;
+}
+
+/* ─── FILTER TABS (PROJECTS PAGE) ───────────────────────────────────────────── */
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--border-default);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-card);
+}
+
+.filter-tab.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
