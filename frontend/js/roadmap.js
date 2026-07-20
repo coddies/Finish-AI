@@ -15,14 +15,65 @@ async function initRoadmapPage() {
   const projectId = params.get('id');
 
   if (!projectId) {
-    document.getElementById('roadmap-content').innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">⚠️</div>
-        <div class="empty-state-title">No Project Specified</div>
-        <p class="empty-state-subtitle">Please select a project from your dashboard to view its roadmap.</p>
-        <a href="dashboard.html" class="btn btn-primary mt-16">← Back to Dashboard</a>
-      </div>
-    `;
+    try {
+      const data = await window.API.getProjects();
+      const projects = data.projects || [];
+
+      if (projects.length === 0) {
+        document.getElementById('roadmap-content').innerHTML = `
+          <div class="empty-state" style="margin: 60px auto; max-width: 500px; text-align: center;">
+            <div class="empty-state-icon" style="font-size: 48px; margin-bottom: 16px;">🗺️</div>
+            <div class="empty-state-title" style="font-size: 20px; font-weight: 800; color: #F1F5F9; margin-bottom: 8px;">No Project Roadmaps Yet</div>
+            <p class="empty-state-subtitle" style="font-size: 14px; color: #64748B; line-height: 1.5; margin-bottom: 24px;">Create your first AI-powered project on the Dashboard to get an instant multi-phase roadmap with resources and timelines.</p>
+            <a href="dashboard.html" class="btn btn-primary">Start with AI Coach →</a>
+          </div>
+        `;
+      } else {
+        document.getElementById('roadmap-content').innerHTML = `
+          <div style="max-width: 1100px; margin: 40px auto; padding: 0 20px;">
+            <div style="margin-bottom: 32px;">
+              <h1 style="font-size: 24px; font-weight: 800; color: #F1F5F9; margin: 0 0 8px 0;">🗺️ Your Project Roadmaps</h1>
+              <p style="font-size: 14px; color: #64748B; margin: 0;">Select a project below to launch its interactive multi-phase roadmap, checkpoints, and curated learning/action resources.</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px;">
+              ${projects.map(p => {
+                const status = p.status || 'on_track';
+                const days = window.App.daysRemaining(p.deadline);
+                const pct = (p.stats && p.stats.actual_percent) ? p.stats.actual_percent : 0;
+                return `
+                  <div class="project-card ${status}" onclick="window.location.href='roadmap.html?id=${p.id}'" style="background: #0F1629; border: 1px solid #1E2A45; border-radius: 12px; padding: 20px; cursor: pointer; transition: transform 150ms ease, border-color 150ms ease;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                      <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 22px;">${p.emoji || '📋'}</span>
+                        <span style="font-size: 16px; font-weight: 700; color: #F1F5F9;">${p.name}</span>
+                      </div>
+                      ${window.App.statusBadge(status)}
+                    </div>
+                    ${p.description ? `<p style="font-size: 13px; color: #64748B; line-height: 1.4; margin: 0 0 16px 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${p.description}</p>` : ''}
+                    <div style="margin: 12px 0; height: 4px; background: #1E2A45; border-radius: 99px; overflow: hidden;">
+                      <div style="width: ${pct}%; background: #3B82F6; height: 100%;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #64748B; margin-top: 14px; border-top: 1px solid var(--border-subtle); padding-top: 14px;">
+                      <span>📅 ${days > 0 ? days + ' days left' : 'Deadline passed'}</span>
+                      <span style="color: #3B82F6; font-weight: 600;">Launch Roadmap →</span>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }
+    } catch (err) {
+      document.getElementById('roadmap-content').innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">⚠️</div>
+          <div class="empty-state-title">No Project Specified</div>
+          <p class="empty-state-subtitle">Please select a project from your dashboard to view its roadmap.</p>
+          <a href="dashboard.html" class="btn btn-primary mt-16">← Back to Dashboard</a>
+        </div>
+      `;
+    }
     return;
   }
 

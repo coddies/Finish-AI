@@ -397,7 +397,10 @@
             • ${milestones} phases / milestones<br>
             • ${taskCount} tasks created<br>
             • Deadline: ${window.App.formatDate(proj.deadline)}<br><br>
-            <a href="project.html?id=${proj.id}" class="btn btn-primary" style="display: inline-block; margin-top: 10px;">📊 View Project Details →</a>
+            <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+              <a href="project.html?id=${proj.id}" class="btn btn-primary" style="display: inline-block;">📊 View Project Details →</a>
+              <a href="roadmap.html?id=${proj.id}" class="btn btn-secondary" style="display: inline-block; background: rgba(59,130,246,0.15); color: #3B82F6; border: 1px solid rgba(59,130,246,0.3);">🗺️ View Roadmap →</a>
+            </div>
           </div>
         `;
         msgs.appendChild(div);
@@ -584,7 +587,10 @@
                 <div class="progress-bar-fill ${window.App.progressColor(pct)}" style="width:${pct}%"></div>
               </div>
             </div>
-            ${window.App.statusBadge(p.status)}
+            <div style="display:flex; align-items:center; gap:8px;">
+              ${window.App.statusBadge(p.status)}
+              <button onclick="event.stopPropagation(); window.location.href='roadmap.html?id=${p.id}'" style="padding: 4px 10px; font-size: 11px; font-weight: 600; border-radius: 6px; background: rgba(59,130,246,0.15); color: #3B82F6; border: 1px solid rgba(59,130,246,0.3); cursor: pointer;" title="View Roadmap">🗺️ Roadmap</button>
+            </div>
           </div>
         `;
       }).join('');

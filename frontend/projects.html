@@ -325,7 +325,10 @@
 
           <!-- BOTTOM ROW -->
           <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 12px;">
-            <button class="btn btn-ghost btn-sm" onclick="window.location.href='project.html?id=${project.id}'" style="padding: 4px 8px; font-size: 12px;">View Project →</button>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); window.location.href='project.html?id=${project.id}'" style="padding: 4px 8px; font-size: 12px;">View Project →</button>
+              <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); window.location.href='roadmap.html?id=${project.id}'" style="padding: 4px 10px; font-size: 12px; background: rgba(59,130,246,0.15); color: #3B82F6; border: 1px solid rgba(59,130,246,0.3);">🗺️ Roadmap</button>
+            </div>
             <button class="btn btn-ghost btn-sm text-danger" onclick="event.stopPropagation(); deleteProject('${project.id}')" style="padding: 4px 8px; font-size: 12px; color: #EF4444;">Delete</button>
           </div>
         </div>
