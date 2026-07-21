@@ -580,6 +580,8 @@ h5, h6 { font-size: 14px; }
 
 .modal-close:hover { color: var(--text-primary); }
 
+.logo { width: 80px; height: 80px; }
+
 /* ─── RESPONSIVE ────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
