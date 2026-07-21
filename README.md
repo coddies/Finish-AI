@@ -4,6 +4,8 @@
 
 AI-powered project execution coach built for **OpenAI Build Week Hackathon 2026**.
 
+🌐 **Live Application URL (Active Vercel Demo):** [https://finish-ai-five.vercel.app/](https://finish-ai-five.vercel.app/)
+
 ---
 
 ## What is FinishAI?
@@ -138,14 +140,26 @@ Personalized AI motivation based on actual project status — not generic tips.
 
 ## 🤖 How We Built This (Codex & GPT-5.6)
 
-**Codex Collaboration:** 
-Codex acted as our core pair-programmer to accelerate development within the tight 5-day deadline. It was instrumental in scaffolding the FastAPI architecture, designing the dynamic Bento-box UI layout in HTML/CSS, and writing the robust automatic multi-model fallback logic in `gpt.py`. When we faced 422 Unprocessable Content errors during the AI payload validation, Codex instantly helped debug and refactor our Pydantic models.
+How Codex & GPT-5.6 were used:
 
-**GPT-5.6 Integration:** 
-GPT-5.6-luna powers the entire "brain" of FinishAI. We used it to build a natural conversational onboarding flow that intelligently extracts project requirements (Goal, Deadline, Hours) regardless of the user's language. Most importantly, GPT-5.6 handles the complex reasoning required for our "Auto Re-planning" feature, dynamically rescheduling tasks and providing a "Next Best Action" when users fall behind.
+- Used Codex Desktop with GPT-5.6 Terra to architect the entire FastAPI backend
+- GPT-5.6 designed the AI conversation flow and intent detection system
+- Codex wrote the auto re-planning algorithm
+- GPT-5.6 helped design the roadmap generation prompt system
+- All major features were built through Codex sessions
 
 **Codex Session ID:** 
 `/feedback e528d174-8447-4d12-8f88-27f15ad4bbba`
+
+# Built with OpenAI
+
+FinishAI was developed during OpenAI Build Week with Codex as the primary development assistant.
+
+As a software engineering student, I wanted to build something that solved a real problem I personally face: turning goals into consistent execution. Throughout development, I used Codex with GPT-5.6 to brainstorm ideas, design the application architecture, refine the AI planning experience, generate and improve code, debug issues, and iterate on features much faster.
+
+For the live application, the AI chat currently runs on Groq's LLaMA models to keep operating costs low and make the project more practical for deployment. This allows FinishAI to remain affordable while still delivering an AI-powered execution coach experience.
+
+OpenAI tools accelerated the development process, while Groq powers the current runtime inference for the demo.
 
 ---
 

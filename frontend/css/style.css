@@ -581,6 +581,7 @@ h5, h6 { font-size: 14px; }
 .modal-close:hover { color: var(--text-primary); }
 
 .logo { width: 80px; height: 80px; }
+.app-logo-icon { width: 28px; height: 28px; border-radius: 6px; }
 
 /* ─── RESPONSIVE ────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {

@@ -23,7 +23,11 @@ slight reflection underneath on dark surface.
 Canvas: Rounded square (iOS icon shape).
 Render quality: Photorealistic, 8K,
 Apple App Store premium quality.
-No text. No extra elements. Just the F icon.# FinishAI — Project Context
+No text. No extra elements. Just the F icon.
+
+# FinishAI — Project Context
+
+🌐 **Live Application URL (Active Vercel Demo):** [https://finish-ai-five.vercel.app/](https://finish-ai-five.vercel.app/)
 
 ## What is this?
 
@@ -176,8 +180,10 @@ USE_GROQ → true for dev, false for prod
 
 - [2026-07-21] **RAILWAY & VERCEL DEPLOYMENT CONFIGURATION & LIVE API SETUP (`railway.json`, `vercel.json`, `api.js`, `style.css`)** — Configured project for full production deployment across Railway (backend) and Vercel (frontend): (1) Created `railway.json` and root `requirements.txt` for clean Railway Nixpacks Python build (`cd backend && pip install -r requirements.txt && uvicorn main:app --host 0.0.0.0 --port $PORT`). (2) Created `vercel.json` for static frontend routing (`@vercel/static`). (3) Updated `CORSMiddleware` in `backend/main.py` with allowed origins (`http://localhost:3000`, `https://*.vercel.app`, `https://*.netlify.app`, `*`). (4) Updated `API_BASE` in `frontend/js/api.js` to live Railway production endpoint (`https://helpful-contentment-production-2bb1.up.railway.app`). (5) Adjusted main application logo dimensions across `frontend/index.html` and `frontend/css/style.css` (`.logo`) to consistent `80px x 80px`. Confirmed `Dockerfile` contains no hardcoded `ARG`/`ENV` API keys.
 
+- [2026-07-21] **LIVE VERCEL DEMO URL, BRAND NAVIGATION & OPENAI BUILD WEEK DOCUMENTATION (`README.md`, `PROJECT.md`, `dashboard.html`, `projects.html`, `daily.html`, `roadmap.html`, `project.html`)** — (1) Added active production Vercel URL ([https://finish-ai-five.vercel.app/](https://finish-ai-five.vercel.app/)) to both `README.md` and `PROJECT.md` so judges and users can access the live application instantly. (2) Updated top bar brand link (`.topbar-brand`) across all 5 main pages (`dashboard.html`, `projects.html`, `daily.html`, `roadmap.html`, `project.html`) to open `index.html` (`<a href="index.html" style="text-decoration:none; color:inherit;">⚡ FinishAI</a>`). (3) Updated `README.md` with complete details on how Codex Desktop and GPT-5.6 Terra were used during OpenAI Build Week 2026 to architect the FastAPI backend, design the conversational flow, write the auto re-planning algorithm, and accelerate development.
+
 ## Known Issues
 
-- None at this time (All Bug fixes, UI improvements, Roadmap Platform, AI Chatbot Onboarding, Linear.app UI, Multi-Model Fallback, Intent-to-Tool Coach Rebuild, Robust Roadmap Parser, English Default Language, Manual Task/Project Entry, Direct Roadmap Selector, and Railway/Vercel Deployment complete)
+- None at this time (All Bug fixes, UI improvements, Roadmap Platform, AI Chatbot Onboarding, Linear.app UI, Multi-Model Fallback, Intent-to-Tool Coach Rebuild, Robust Roadmap Parser, English Default Language, Manual Task/Project Entry, Direct Roadmap Selector, Railway/Vercel Deployment, and Live URL/Brand Navigation complete)
 
 
