@@ -41,10 +41,16 @@ async def validation_exception_handler(request, exc):
         }
     )
 
-# CORS — allow all origins for hackathon (tighten in production)
+# CORS middleware configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://*.vercel.app",
+        "https://*.netlify.app",
+        "*"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

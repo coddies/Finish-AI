@@ -4,7 +4,10 @@
  * Handles base URL, error handling, and response parsing.
  */
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = window.location.hostname 
+  === 'localhost' 
+  ? 'http://localhost:8000'
+  : 'https://YOUR_RAILWAY_URL';
 
 /**
  * Core fetch wrapper with error handling
