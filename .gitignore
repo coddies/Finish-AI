@@ -21,3 +21,8 @@ backend/data/*.json
 dist/
 build/
 *.egg-info/
+
+# Local uv environments and cache created for this workspace
+.venv-*/
+.uv-cache/
+**/.venv-*/
