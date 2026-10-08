@@ -1,7 +1,7 @@
 # FinishAI — Frontend PRD
 
-**Version:** 1.0 | **Scope:** Web frontend only | **Parent doc:** `docs/PRD.md` (product-level PRD)
-**Related:** `frontend_SRS.md`, `frontend_system_design.md`, `frontend/plan.md`, `docs/API_CONTRACT.md`
+**Version:** 1.0 | **Scope:** Web frontend only | **Parent doc:** Product-level `PRD.md` was not supplied.
+**Related:** `frontend_SRS.md`, `frontend_system_design.md`, `frontend_plan.md`, `API_CONTRACT.md`
 
 ## 1. Purpose
 Define what the FinishAI web frontend must deliver for users. The frontend turns the backend's AI planning engine into a clear, fast, trustworthy experience: the user describes a goal, sees a plan, always knows the next action, and recovers smoothly when they fall behind.

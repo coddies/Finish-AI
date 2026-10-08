@@ -1,13 +1,13 @@
 # FinishAI — Backend PRD
 
-**Version:** 1.0 | **Scope:** API, AI services, data | **Parent doc:** `docs/PRD.md`
-**Related:** `backend_SRS.md`, `backend_system_design.md`, `backend_security.md`, `backend/plan.md`
+**Version:** 1.0 | **Scope:** API, AI services, data | **Parent doc:** Product-level `PRD.md` was not supplied.
+**Related:** `backend_SRS.md`, `backend_system_design.md`, `backend_security.md`, `../backend/plan.md`
 
 ## 1. Purpose
 Define what the FinishAI backend must provide so the product PRD can be delivered: AI-driven planning, deterministic re-planning, a career analysis service, and a stable API for the frontend.
 
 ## 2. Context
-The repository already holds backend code from two earlier projects that were merged, with extra features beyond the original PRD. This PRD defines the target. `backend/plan.md` governs how existing code is reused: **existing working code and extra features are kept; new code is added only for requirements not already covered.**
+The repository already holds backend code from two earlier projects that were merged, with extra features beyond the original PRD. This PRD defines the target. `../backend/plan.md` governs how existing code is reused: **existing working code and extra features are kept; new code is added only for requirements not already covered.**
 
 ## 3. Backend capabilities
 | # | Capability | Summary |

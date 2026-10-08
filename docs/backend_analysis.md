@@ -1,20 +1,20 @@
 # FinishAI Backend Analysis
 
 **Date:** 2026-10-07  
-**Scope:** Read-only inventory of the backend and frontend sources currently present in this workspace. Secret values were not read or recorded.
+**Scope:** Inventory of both original backends and the supplied frontend plans before Phase 6. The old source folders are now preserved at the sibling archive `../../FinishAI_archive_2026-10-07/`. Secret values were not recorded in this document.
 
 ## 1. Source mapping and missing inputs
 
-The workspace does not use the supplied `old/repo_A`, `old/repo_B`, or `docs/` layout. Following the user's clarification to use all code in the workspace, the two existing backend projects map as follows:
+The workspace did not use the supplied `old/repo_A`, `old/repo_B`, or `docs/` layout. Following the user's clarification to use all code in the workspace, the two existing backend projects mapped as follows; both originals are now archived outside the repository:
 
 | Expected project | Workspace source | Finding |
 |---|---|---|
-| FinishAI goal-coach backend | `backend/` | FastAPI API with JSON-file project/task storage, AI roadmap/chat/delay/re-plan routes, and no session ownership. |
-| Career/job ReAct project | `Agent_SDK/` | FastAPI career-advisor API and `career_agent/` ReAct engine with model cascade, skill tools, and PDF text extraction. No job listing feed or listing search implementation was found. |
+| FinishAI goal-coach backend | `../../FinishAI_archive_2026-10-07/backend/` | FastAPI API with JSON-file project/task storage, AI roadmap/chat/delay/re-plan routes, and no session ownership. |
+| Career/job ReAct project | `../../FinishAI_archive_2026-10-07/Agent_SDK/` | FastAPI career-advisor API and `career_agent/` ReAct engine with model cascade, skill tools, and PDF text extraction. No job listing feed or listing search implementation was found. |
 
-Available product/backend documentation is at the workspace root: `backend_plan.md`, `backend_PRD.md`, `backend_SRS.md`, `backend_system_design.md`, and `backend_security.md`. The following referenced inputs are absent: `docs/PRD.md`, `docs/frontend_PRD.md`, `docs/frontend_SRS.md`, and `docs/frontend_system_design.md`. `backend_plan.md` references `docs/PRD.md` and `docs/SRS.md`, neither of which is present at those paths. Product-ID mapping below is therefore provisional and based on the backend PRD/SRS traceability table.
+Backend and frontend PRD/SRS/design/plan documents are now in this `docs/` folder; the backend working plan is at `../backend/plan.md`. A separate product-level `PRD.md` and `SRS.md` were not supplied. Product-ID mapping below is therefore provisional and based on `backend_PRD.md` and `backend_SRS.md`.
 
-The frontend exists and is read-only. Its primary API adapter is `frontend/js/api.js`; it calls the existing `/api/projects`, `/api/tasks`, `/api/ai`, and `/api/replan` routes without session or authorization headers.
+The old frontend is archived at `../../FinishAI_archive_2026-10-07/frontend/`; its `js/api.js` called legacy `/api/projects`, `/api/tasks`, `/api/ai`, and `/api/replan` routes without session or authorization headers. The separate frontend plan supplied for the new frontend is retained in `frontend_plan.md`. The actual new `frontend/src/api/` implementation is not present yet.
 
 ## 2. Feature inventory
 
@@ -32,7 +32,7 @@ The frontend exists and is read-only. Its primary API adapter is `frontend/js/ap
 | Resource suggestions | Roadmap prompts and `Resource` schema | Partial/unsafe; model-authored URLs are stored and returned without curation or SSRF-safe verification | B10 / G13 (gap) |
 | Health | `main.py` `/health` and `/` | Partial; health reveals active provider/model and is not a database connectivity check | B10 |
 
-### 2.2 Career/ReAct backend (`Agent_SDK/`)
+### 2.2 Career/ReAct backend (archived `Agent_SDK/`)
 
 | Feature | Implementation | Status | Provisional mapping |
 |---|---|---|---|
@@ -49,13 +49,13 @@ No job-listing provider, scraper, listings data model, or listing endpoint exist
 
 ### Files and flow
 
-- `Agent_SDK/career_agent/agent.py`: ReAct loop, capped at five turns, calls the LLM cascade, executes returned tools, appends observations, and ends when there are no tool calls.
-- `Agent_SDK/career_agent/llm_cascade.py`: provider adapters and ordered failover over `FALLBACK_CASCADE`; converts the neutral conversation history to each provider's format.
-- `Agent_SDK/career_agent/state_adapter.py`: provider-agnostic chat/tool history converters.
-- `Agent_SDK/career_agent/tools.py`: Pydantic input classes, tool registry, and provider function declarations.
-- `Agent_SDK/api/services/agent_engine.py`: wraps the loop to collect provider/turn traces by monkey-patching module-level functions during a request.
-- `Agent_SDK/api/routers/chat.py`: chat API and in-memory history keyed by caller-supplied session ID.
-- `Agent_SDK/career_agent/config.py`: prompts, provider/model entries, and the five-turn cap.
+- `../../FinishAI_archive_2026-10-07/Agent_SDK/career_agent/agent.py`: ReAct loop, capped at five turns, calls the LLM cascade, executes returned tools, appends observations, and ends when there are no tool calls.
+- `../../FinishAI_archive_2026-10-07/Agent_SDK/career_agent/llm_cascade.py`: provider adapters and ordered failover over `FALLBACK_CASCADE`; converts the neutral conversation history to each provider's format.
+- `../../FinishAI_archive_2026-10-07/Agent_SDK/career_agent/state_adapter.py`: provider-agnostic chat/tool history converters.
+- `../../FinishAI_archive_2026-10-07/Agent_SDK/career_agent/tools.py`: Pydantic input classes, tool registry, and provider function declarations.
+- `../../FinishAI_archive_2026-10-07/Agent_SDK/api/services/agent_engine.py`: wraps the loop to collect provider/turn traces by monkey-patching module-level functions during a request.
+- `../../FinishAI_archive_2026-10-07/Agent_SDK/api/routers/chat.py`: chat API and in-memory history keyed by caller-supplied session ID.
+- `../../FinishAI_archive_2026-10-07/Agent_SDK/career_agent/config.py`: prompts, provider/model entries, and the five-turn cap.
 
 The brain uses a custom Python ReAct loop, not LangChain or LangGraph. The tools are limited to skill text summarization and asking the model to produce role, freelance, SaaS, and skill-gap advice. They have no direct network, shell, filesystem, or database actions. The merged loop dispatches only registered tool names, bounds inputs, injects the LLM callback per request, and keeps traces request-local. Tool observations are not logged as text.
 
@@ -67,7 +67,7 @@ The brain uses a custom Python ReAct loop, not LangChain or LangGraph. The tools
 2. Otherwise: OpenAI `gpt-4o-mini` → `gpt-4o` → `gpt-3.5-turbo`; it does not fall back to Groq.
 3. The provider choice is made at import time. Calls use a 20-second timeout per model and try all configured models for any exception; there is no shared request budget. JSON parsing has one repair attempt but sleeps one second before retrying.
 
-`Agent_SDK/career_agent/config.py` configures a different chain:
+`../../FinishAI_archive_2026-10-07/Agent_SDK/career_agent/config.py` configures a different chain:
 
 1. Gemini `models/gemini-3.6-flash`
 2. Groq `openai/gpt-oss-120b`
@@ -130,7 +130,7 @@ Names only; `.env` values were not read or disclosed.
 - FinishAI backend: `OPENAI_API_KEY`, `GROQ_API_KEY`, `USE_GROQ`, `PORT`.
 - Agent SDK: `GEMINI_API_KEY`, `GROQ_API_KEY`, `NVIDIA_API_KEY`, `HF_TOKEN`, `OLLAMA_BASE_URL`, `ALLOWED_ORIGINS`.
 - `PORT` is also read by FinishAI's entrypoint. The SDK uses lower-bound package requirements; FinishAI's requirements are unpinned.
-- The root `.gitignore` ignores `.env` and `.venv`; `Agent_SDK/.gitignore` ignores `.env*`. Both backend `.env` files exist and were treated as secrets. Neither is tracked in its repository. Pattern scans found no credential-shaped literals in source or Git history; this scan cannot prove a secret was never stored under a different format.
+- The root `.gitignore` ignores `.env` and `.venv`; the archived `Agent_SDK/.gitignore` ignores `.env*`. Legacy `.env` files were not tracked. Only required career-chain values were copied into the ignored `backend/.env`; env values are not documented here. A comprehensive Git-history secret scan is still required before any public push.
 
 ### Security and unsafe-pattern review
 
@@ -145,7 +145,7 @@ Names only; `.env` values were not read or disclosed.
 
 ## 6. Overlaps, conflicts, and gaps
 
-1. **Product PRD missing:** the source-of-truth `docs/PRD.md` is unavailable, so requirements and C1–C9 mappings cannot be fully verified.
+1. **Product PRD missing:** a product-level `PRD.md` is unavailable, so requirements and C1–C9 mappings cannot be fully verified.
 2. **Agent retention vs stateless requirement:** career chat currently relies on in-memory history; production requires stateless instances and external persistence.
 3. **Conflicting LLM chains:** FinishAI and Agent SDK have separate provider order, models, key usage, retry, and timeout behavior. A single wrapper cannot preserve both by simply selecting one list; capability-specific compatibility or an explicitly approved merged order is needed.
 4. **Security policy conflict:** the original backend plan forbids agent loops and tool calls, while the supplied merge prompt explicitly retains the existing ReAct brain under SEC-P8. The newer prompt is the stated override; affected docs and change log need updating after merge-plan approval.

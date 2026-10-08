@@ -1,6 +1,6 @@
 # FinishAI — Frontend SRS (Software Requirements Specification)
 
-**Version:** 1.0 | **Parent:** `frontend_PRD.md` | **Interface:** `docs/API_CONTRACT.md`
+**Version:** 1.0 | **Parent:** `frontend_PRD.md` | **Interface:** `API_CONTRACT.md`
 
 ## 1. Introduction
 **Purpose:** Precise, testable requirements for the FinishAI web frontend.

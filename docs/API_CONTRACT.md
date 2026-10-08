@@ -1,7 +1,7 @@
 # FinishAI API Contract
 
 **Version:** 1.0 (new contract)  
-**Compatibility basis:** Backend SRS, approved merge plan, and the supplied new frontend plan/system design (`frontend_plan.md`, `frontend_system_design.md`). The actual `frontend/src/api/` implementation is not present yet, so request/response compatibility must be confirmed against it when the frontend arrives. The old frontend is legacy and its `/api/*` routes are not aliases.
+**Compatibility basis:** Backend SRS, approved merge plan, and the supplied new frontend plan/system design (`frontend_plan.md`, `frontend_system_design.md`). The actual `frontend/src/api/` implementation is not present yet, so request/response compatibility must be confirmed against it when the frontend arrives. The old frontend is archived and its `/api/*` routes are not aliases.
 
 **Frontend alignment notes:** The plan's screen flows map to `POST /goals`, `GET /goals/{id}`, `GET /goals/{id}/next-action`, `POST /tasks/{id}/status`, `POST /goals/{id}/replan`, `POST /career/analyze`, `POST /career/{id}/select-role`, and `GET /goals`. The frontend plan abbreviates proposal acceptance as `POST …/accept`; this contract uses the explicit proposal-scoped route `POST /goals/{goal_id}/replan/{proposal_id}/accept` (and a matching reject route), which the API client must call after it receives `proposal_id`. The supplied plan does not specify `POST /session`, `GET /tasks/today`, resume upload, coach chat, or career agent chat; these retained backend capabilities are optional to the planned frontend. The API client system design asks for one session retry and a 45-second client timeout; these are frontend responsibilities, while the backend returns 401 and caps plan/replan budgets at 20/10 seconds.
 

@@ -3,10 +3,10 @@
 > This file is the **working contract between the frontend developer and their AI coding tool**. Read it fully before doing anything. Visual design is NOT defined here (see §2).
 
 ## 1. Source of truth (priority order)
-1. `docs/PRD.md` and `docs/SRS.md` — WHAT the product does and what each screen must support.
-2. `docs/API_CONTRACT.md` — the exact backend API (produced by the backend side).
+1. `backend_PRD.md` / `backend_SRS.md` for backend behavior, and `frontend_PRD.md` / `frontend_SRS.md` for frontend requirements.
+2. `API_CONTRACT.md` — the exact backend API.
 3. `frontend/design.md` — visual design (written by the frontend developer).
-4. This `plan.md` — structure, behaviour, and restrictions.
+4. This `frontend_plan.md` — structure, behavior, and restrictions.
 
 ## 2. Design freedom
 - Colors, typography, spacing, layout style and overall look are chosen by the frontend developer and written in `frontend/design.md`.

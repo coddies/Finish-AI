@@ -1,6 +1,6 @@
 # FinishAI — Frontend System Design
 
-**Version:** 1.0 | **Inputs:** `frontend_PRD.md`, `frontend_SRS.md`, `frontend/plan.md`
+**Version:** 1.0 | **Inputs:** `frontend_PRD.md`, `frontend_SRS.md`, `frontend_plan.md`
 Visual design is out of scope here: it comes from `design.md`.
 
 ## 1. Design goals

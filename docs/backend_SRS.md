@@ -1,6 +1,6 @@
 # FinishAI — Backend SRS (Software Requirements Specification)
 
-**Version:** 1.0 | **Parent:** `backend_PRD.md` | **Interface:** `backend_system_design.md` §6 and `docs/API_CONTRACT.md`
+**Version:** 1.0 | **Parent:** `backend_PRD.md` | **Interface:** `backend_system_design.md` §6 and `API_CONTRACT.md`
 
 ## 1. Introduction
 **Purpose:** Precise, testable requirements for the FinishAI backend.

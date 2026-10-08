@@ -1,6 +1,6 @@
 # FinishAI — Backend Security Requirements
 
-**Version:** 1.0 | **Applies to:** all backend code, config and deployment | **Related:** `backend_SRS.md`, `backend_system_design.md`, `backend/plan.md`
+**Version:** 1.0 | **Applies to:** all backend code, config and deployment | **Related:** `backend_SRS.md`, `backend_system_design.md`, `../backend/plan.md`
 
 > The AI coding tool must treat every item marked **MUST** as a requirement, not a suggestion. When a requirement conflicts with convenience, security wins. If something cannot be done, ask the developer instead of skipping it.
 
@@ -143,7 +143,7 @@ Status below is the pre-deploy assessment on 2026-10-08. A PASS means code/confi
 | HTTPS only; security headers present | **FAIL** | Security headers are emitted and Railway TLS is documented, but the live Railway domain/redirect has not been verified. |
 | Rate limits and LLM budget configured | **FAIL** | PostgreSQL counters, configurable limits, and 429 test pass (`test_rate_limit_returns_429_and_retry_after`); production values and database-backed live behavior remain unconfigured. |
 | DB is persistent (Postgres/volume) with backups enabled; app DB user is least-privilege | **FAIL** | PostgreSQL support and migration configuration exist; no provider has been selected/configured, and backups/least-privilege credentials have not been verified. |
-| Ownership, auth, SSRF and injection tests passing | **FAIL** | Ownership/auth and SSRF test suites pass; explicit prompt-injection regression coverage and live-provider behavior remain unverified. Do not deploy until that test coverage is added/reviewed. |
+| Ownership, auth, SSRF and injection tests passing | **PASS** | Ownership/auth and SSRF suites pass. `test_prompt_injection_is_delimited_and_business_rules_stay_in_code` checks untrusted-data framing and deterministic capacity rejection. This is code-level coverage; live-provider behavior remains unverified. |
 | `pip-audit` clean or exceptions documented | **PASS** | `uv audit` passed for the locked environment: 51 packages, no known vulnerabilities reported. |
 | Logs reviewed: no tokens, prompts or goal text | **PASS** | Request/LLM logs use request IDs, provider/model labels and exception types. `test_llm_failover_logs_do_not_include_provider_error_secrets` verifies provider exception content and prompt text are omitted; legacy career cascade/error logging was hardened. |
 | Old-repo code reviewed for hardcoded secrets or unsafe calls | **FAIL** | Core merged code was reviewed and unsafe dynamic execution patterns were not found, but a full secret scan of source/history and archived legacy files remains outstanding. |
@@ -162,6 +162,7 @@ Status below is the pre-deploy assessment on 2026-10-08. A PASS means code/confi
 | Provider failover | `LlmFailoverTests.test_provider_limit_immediately_uses_next_tier` |
 | Railway client IP | `test_client_ip_uses_railway_real_ip_only_when_enabled` |
 | Pooled psycopg prepared-statement config | `LlmCoreTests.test_pooled_psycopg_disables_prepared_statements` |
+| Prompt injection / deterministic business rules | `test_prompt_injection_is_delimited_and_business_rules_stay_in_code` |
 
 ## 16. Incident basics
 - If a key leaks: rotate immediately at the provider, update Railway env, redeploy, review usage logs.
