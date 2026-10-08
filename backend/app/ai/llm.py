@@ -76,12 +76,13 @@ class LLM:
     def _career_chain(self) -> list[tuple[str, str, str, str]]:
         # Import the existing configuration (copied without model/order changes).
         from app.ai.brain.career_agent.config import FALLBACK_CASCADE
+        career_groq_api_key = self.settings.career_agent_groq_api_key
         chain = []
         for tier in FALLBACK_CASCADE:
             if tier.provider == "gemini":
                 chain.append(("gemini", tier.model_id, self.settings.gemini_api_key, "https://generativelanguage.googleapis.com/v1beta/openai"))
             elif tier.provider == "groq":
-                chain.append(("groq", tier.model_id, self.settings.groq_api_key, ""))
+                chain.append(("groq", tier.model_id, career_groq_api_key, ""))
             elif tier.provider == "huggingface":
                 chain.append(("huggingface", tier.model_id, self.settings.hf_token, "https://api-inference.huggingface.co/v1"))
             elif tier.provider == "ollama":

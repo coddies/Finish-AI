@@ -32,14 +32,21 @@ class LlmCoreTests(unittest.TestCase):
     def test_profiles_preserve_independent_model_order(self):
         gateway = object.__new__(LLM)
         gateway.settings = SimpleNamespace(
-            use_groq=True, groq_api_key="", openai_api_key="", gemini_api_key="",
-            hf_token="", ollama_base_url="http://localhost:11434")
-        self.assertEqual([x[1] for x in gateway._finishai_chain()], [
+            use_groq=True, groq_api_key="finishai-groq-key", career_agent_groq_api_key="career-groq-key",
+            openai_api_key="openai-key", gemini_api_key="gemini-key", hf_token="hf-key",
+            ollama_base_url="http://localhost:11434")
+        finishai_chain = gateway._finishai_chain()
+        career_chain = gateway._career_chain()
+        self.assertEqual([x[1] for x in finishai_chain], [
             "llama-3.1-8b-instant", "llama-3.3-70b-versatile", "qwen/qwen3.6-27b",
             "openai/gpt-oss-20b", "groq/compound-mini", "gpt-4o-mini", "gpt-4o", "gpt-3.5-turbo"])
-        self.assertEqual([x[1] for x in gateway._career_chain()], [
+        self.assertTrue(all(x[2] == "finishai-groq-key" for x in finishai_chain[:5]))
+        self.assertTrue(all(x[2] == "openai-key" for x in finishai_chain[5:]))
+        self.assertEqual([x[1] for x in career_chain], [
             "models/gemini-3.6-flash", "openai/gpt-oss-120b", "qwen/qwen3.8-27b",
             "openai/gpt-oss-20b", "meta-llama/Llama-3.3-70B-Instruct", "gemma:4b"])
+        self.assertEqual([x[2] for x in career_chain], [
+            "gemini-key", "career-groq-key", "career-groq-key", "career-groq-key", "hf-key", "ollama"])
 
     def test_empty_jev_configuration_is_disabled(self):
         gateway = object.__new__(LLM)

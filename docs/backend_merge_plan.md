@@ -16,7 +16,7 @@
 - Preserve the Agent_SDK career agent's role matching, freelancing/B2B offers, SaaS ideas, income-focused skill gaps, five-turn ReAct cap, PDF extraction, and execution metadata. Expose these through authenticated merged routes; do not copy its frontend or keep legacy route paths as a requirement.
 - Preserve feature behavior, not old route names. The separately developed frontend is not present, so compatibility is unverified until that frontend is integrated later.
 - Phase 6 archive was performed only after commit `4cddf6a` / tag `phase6-prearchive-2026-10-08`, passing tests, and explicit user approval of the exact list. No permanent deletion was performed; `finishai_finetune_final.jsonl` is retained in the archive.
-- Legacy `.env` values were handled privately. Only `GEMINI_API_KEY`, `HF_TOKEN`, and `OLLAMA_BASE_URL` were copied into ignored local `backend/.env`; no values were printed. Existing FinishAI API key entries were preserved.
+- Legacy `.env` values were handled privately. Provider credentials are present only in ignored local `backend/.env`; values were never printed. The FinishAI Groq key remains under `GROQ_API_KEY`; because the career-agent Groq value differs, the merged runtime uses the documented `CAREER_AGENT_GROQ_API_KEY` alias for that profile. The runtime falls back to `GROQ_API_KEY` if the alias is unset.
 - The supplied new frontend plan was analyzed and `docs/API_CONTRACT.md` was aligned to its routes. Actual `frontend/src/api/` is absent, so exact implementation-level request/response compatibility remains unverified.
 
 ## 2. Base and merge strategy
@@ -82,7 +82,7 @@ All authenticated contract routes require the session token and return 404 for a
 
 1. **Analysis and merge plan:** complete and approved.
 2. **Phase 4 implementation:** complete in `backend/` and `docs/`.
-3. **Phase 5 checks:** complete; 23 unit/API tests pass, initial Alembic migration smoke test passes, and `uv audit` reports no known vulnerabilities across 51 packages.
+3. **Phase 5 checks:** 31 tests pass. On 2026-10-08, the pooled Neon runtime URL passed `SELECT 1`, the direct migration URL reported `0001_initial (head)` after applying the initial migration, FastAPI `/health` returned `status=ok` and `db=ok`, and `uv audit` found no known vulnerabilities or adverse statuses in 51 packages. The separately developed frontend is still absent, so API compatibility is not verified.
 4. **Phase 6 archive:** complete. The approved list is recoverably archived outside the repo; backend specs and frontend planning docs are in `docs/`, and the backend plan is at `backend/plan.md`.
 
 ## 6. Blocking items before implementation

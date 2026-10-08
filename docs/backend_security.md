@@ -136,15 +136,15 @@ Status below is the pre-deploy assessment on 2026-10-08. A PASS means code/confi
 
 | Checklist item | Status | Evidence / remaining action |
 |---|---|---|
-| No secrets in repo or git history; `.env` ignored; `.env.example` present | **FAIL** | `.env` and `*.env` are ignored and `.env.example` exists. Full git-history secret scanning has not been completed. Never commit local `.env`; scan history and rotate any real key that may have been exposed before public push. |
+| No secrets in repo or git history; `.env` ignored; `.env.example` present | **FAIL** | `.env` is ignored and `.env.example` exists, but the Neon database credential was exposed in chat. Rotate it before public deployment and update both local connection variables. Full git-history secret scanning has not been completed. |
 | Production keys differ from development keys; provider usage limits set | **FAIL** | Railway/provider account settings are unavailable; configure separate production credentials and provider-side spend/usage caps. |
 | `ENV=production`; debug off; docs endpoint decision applied | **FAIL** | Production setting disables docs/OpenAPI in code; Railway has not been configured or deployed. |
 | CORS limited to exact frontend origins | **FAIL** | Exact-origin validation and allow/deny test pass (`test_cors_allows_configured_origin_and_rejects_other_origin`). Set production `CORS_ORIGINS` to the final frontend origin(s) before deploy. |
 | HTTPS only; security headers present | **FAIL** | Security headers are emitted and Railway TLS is documented, but the live Railway domain/redirect has not been verified. |
-| Rate limits and LLM budget configured | **FAIL** | PostgreSQL counters, configurable limits, and 429 test pass (`test_rate_limit_returns_429_and_retry_after`); production values and database-backed live behavior remain unconfigured. |
-| DB is persistent (Postgres/volume) with backups enabled; app DB user is least-privilege | **FAIL** | PostgreSQL support and migration configuration exist; no provider has been selected/configured, and backups/least-privilege credentials have not been verified. |
+| Rate limits and LLM budget configured | **FAIL** | PostgreSQL counters, configurable limits, and 429 test pass (`test_rate_limit_returns_429_and_retry_after`); live schema is migrated, but production rate/budget values and multi-instance load behavior are not verified. |
+| DB is persistent (Postgres/volume) with backups enabled; app DB user is least-privilege | **FAIL** | Neon pooled runtime connection and direct migration connection both succeeded; migration `0001_initial` is applied, 12 public tables exist, and `/health` reports `db=ok`. Backup policy and least-privilege DB credentials are not verified. |
 | Ownership, auth, SSRF and injection tests passing | **PASS** | Ownership/auth and SSRF suites pass. `test_prompt_injection_is_delimited_and_business_rules_stay_in_code` checks untrusted-data framing and deterministic capacity rejection. This is code-level coverage; live-provider behavior remains unverified. |
-| `pip-audit` clean or exceptions documented | **PASS** | `uv audit` passed for the locked environment: 51 packages, no known vulnerabilities reported. |
+| `pip-audit` clean or exceptions documented | **PASS** | `uv audit` passed for the locked environment: 51 packages, no known vulnerabilities or adverse statuses reported on 2026-10-08. |
 | Logs reviewed: no tokens, prompts or goal text | **PASS** | Request/LLM logs use request IDs, provider/model labels and exception types. `test_llm_failover_logs_do_not_include_provider_error_secrets` verifies provider exception content and prompt text are omitted; legacy career cascade/error logging was hardened. |
 | Old-repo code reviewed for hardcoded secrets or unsafe calls | **FAIL** | Core merged code was reviewed and unsafe dynamic execution patterns were not found, but a full secret scan of source/history and archived legacy files remains outstanding. |
 

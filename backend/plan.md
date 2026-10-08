@@ -51,20 +51,20 @@ Rule: extra features are **kept**. They are flagged as "extra" in the design and
 8. Do not remove extra features, even if they are not in the PRD.
 
 **Stack (fixed)**
-9. Python, FastAPI, Pydantic schemas. SQLite for MVP, structured so PostgreSQL works later. Groq LLaMA through one LLM wrapper (`llm.generate(prompt, schema)`), so the provider is swappable.
+9. Python, FastAPI, Pydantic schemas, PostgreSQL only via pooled `DATABASE_URL`, with SQLAlchemy, Alembic, and psycopg as approved. Alembic uses direct `MIGRATION_DATABASE_URL`. Preserve the independent FinishAI and career-agent text cascades in one LLM wrapper; Jev is a separate decision-only adapter.
 
 **AI behaviour (from PRD §8)**
-10. Every LLM output is structured JSON validated by a Pydantic schema before use. One retry on invalid output, then a clean error.
+10. Every LLM output is structured JSON validated by a Pydantic schema before use. Repair JSON deterministically first, make at most one AI repair call if needed, then perform at most one Jev decision verification within the same operation budget. Jev never rewrites text; unavailable Jev means `verified=false`.
 11. Deadline math, capacity, and scheduling are done in **code**. The LLM only writes content (tasks, resources, explanations).
 12. Re-plan must handle infeasible deadlines honestly (PRD §8.2): never fake a plan, return options (extend deadline / cut scope / more hours).
 13. Next Best Action is rule-based; the LLM only phrases it.
 14. Resource links must be verified or come from a curated list. No unverified links returned as facts.
-15. Design each AI capability as a separate callable function (`create_plan`, `replan`, `analyze_skills`, `next_action`) so a ReAct/agent loop can be added later without a rewrite. Do not build the loop now.
+15. Keep the existing Agent SDK ReAct brain under `app/ai/brain/`, wrapped by capability functions (`create_plan`, `replan`, `analyze_skills`, `next_action`). Enforce the configured 3–5 step ceiling; do not remove or bypass the brain.
 
 **Safety and hygiene**
 16. No secrets in code or git. All keys via environment variables; provide `.env.example`.
 17. CORS configured for the frontend domain through an env variable.
-18. LLM rate limits: retry with backoff and return friendly errors. The app must not crash.
+18. LLM rate limits and provider failures advance immediately to the next configured tier with no backoff sleep; return a safe friendly error only after that profile is exhausted. The app must not crash.
 19. Small commits with clear messages. Work on a feature branch, not `main`.
 
 ## 5. Repo layout (shared repo, 3 developers)
@@ -113,3 +113,4 @@ Do not skip ahead. Stop after each step and wait for developer review.
 | 2026-10-07 | Phase 5 checks complete: 23 tests pass, initial migration smoke test passes, `uv audit` finds no known vulnerabilities in 51 packages, source AST and Railway JSON checks pass. No cleanup was performed. | `backend/tests/`, `backend/migrations/`, `railway.json`, `docs/backend_merge_plan.md` | Record implementation evidence and leave Phase 6 behind its exact-list approval gate. | User authorized Phases 4 and 5; cleanup still requires exact-list approval. |
 | 2026-10-08 | Aligned the API contract with the supplied frontend plan (actual API source is still pending), documented proposal-scoped accept/reject routes and retained optional backend endpoints, direct Alembic URL vs pooled runtime URL, Psycopg `prepare_threshold=None`, Railway `X-Real-IP`, and unknown Jev compatibility. Fixed Railway proxy setting import and a plan-generation `date` shadowing bug discovered by tests. Hardened legacy career brain logs to exclude raw exception contents. | `docs/API_CONTRACT.md`, `backend/README.md`, `backend/app/api/deps.py`, `backend/app/ai/capabilities.py`, `backend/app/ai/brain/career_agent/agent.py`, `backend/app/ai/brain/career_agent/llm_cascade.py`, `backend/tests/` | Complete requested pre-deploy verification and record deviations; no frontend code changed. | User authorized Phase 6 and requested backend alignment only. |
 | 2026-10-08 | Phase 6 completed after checkpoint `4cddf6a` / tag `phase6-prearchive-2026-10-08`: moved the approved legacy file list (including `finishai_finetune_final.jsonl`) to the external archive, moved backend specs to `../docs/`, moved this plan to `backend/plan.md`, and preserved the new frontend requirements/plan in `../docs/`. Copied only needed legacy provider settings into ignored `backend/.env`. Post-move validation passed: 31 tests, Alembic SQLite migration smoke, and local `/health` startup. | `../docs/`, `backend/`, `../../FinishAI_archive_2026-10-07/` | Complete approved archive while preserving recoverability; no frontend code was created or edited. | User approved Phase 6 and its exact archive/move conditions. |
+| 2026-10-08 | Restored the saved merged-backend branch locally, configured a private session-token pepper, fixed the career-agent profile to use its distinct archived Groq credential (with a legacy fallback), and confirmed 31 tests, pooled Neon connectivity, direct Alembic connectivity, migration `0001_initial`, 12 public tables, and local `/health` reporting `db=ok`. No GitHub remote was contacted. | `backend/app/core/config.py`, `backend/app/ai/llm.py`, `backend/.env.example`, `backend/tests/test_llm_core.py`, ignored `backend/.env` | The two source projects used different Groq credentials; sharing one setting routed the career profile through the wrong key. Final local readiness was verified after fixing the profile mapping. | User asked to complete the backend and expressly prohibited GitHub pushes. |

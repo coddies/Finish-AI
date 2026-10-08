@@ -33,6 +33,7 @@ class Settings:
     use_groq: bool
     openai_api_key: str
     groq_api_key: str
+    career_agent_groq_api_key: str
     gemini_api_key: str
     nvidia_api_key: str
     hf_token: str
@@ -87,6 +88,7 @@ def get_settings() -> Settings:
         trust_railway_proxy=os.getenv("TRUST_RAILWAY_PROXY", "false").lower() == "true",
         use_groq=os.getenv("USE_GROQ", "false").lower() == "true",
         openai_api_key=os.getenv("OPENAI_API_KEY", ""), groq_api_key=os.getenv("GROQ_API_KEY", ""),
+        career_agent_groq_api_key=os.getenv("CAREER_AGENT_GROQ_API_KEY", os.getenv("GROQ_API_KEY", "")),
         gemini_api_key=os.getenv("GEMINI_API_KEY", ""), nvidia_api_key=os.getenv("NVIDIA_API_KEY", ""),
         hf_token=os.getenv("HF_TOKEN", ""), ollama_base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434").rstrip("/"),
         ai_budget_plan_seconds=plan_budget,
